@@ -24,8 +24,8 @@ namespace hpms
             return hpms::SafeNewRaw<hpms::LuaScript>(this, name, handle, group);
         }
 
-
     public:
+
         LuaScriptManager();
 
         virtual ~LuaScriptManager();

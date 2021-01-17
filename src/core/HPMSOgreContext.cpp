@@ -108,7 +108,7 @@ void hpms::OgreContext::CreateViewports()
     sceneMgr = root->GetWrappedObject()->createSceneManager();
     camera = sceneMgr->createCamera(DEFAULT_CAMERA_NAME);
     Ogre::Viewport* vp = windowPair.render->addViewport(camera);
-    vp->setBackgroundColour(Ogre::ColourValue(0, 0, 0));
+    vp->setBackgroundColour(Ogre::ColourValue(1, 1, 1));
 
     camera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
 }

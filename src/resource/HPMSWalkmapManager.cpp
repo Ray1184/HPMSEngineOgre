@@ -6,13 +6,13 @@
 
 hpms::WalkmapManager& hpms::WalkmapManager::GetSingleton()
 {
-    static WalkmapManager instance;
-    return instance;
+    return *GetSingletonPtr();
 }
 
 hpms::WalkmapManager* hpms::WalkmapManager::GetSingletonPtr()
 {
-    return &GetSingleton();
+    static auto* instance = hpms::SafeNew<WalkmapManager>();
+    return instance;
 }
 
 hpms::WalkmapManager::WalkmapManager()

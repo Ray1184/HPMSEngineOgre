@@ -24,8 +24,8 @@ namespace hpms
             return hpms::SafeNewRaw<hpms::Walkmap>(this, name, handle, group);
         }
 
-
     public:
+
         WalkmapManager();
 
         virtual ~WalkmapManager();

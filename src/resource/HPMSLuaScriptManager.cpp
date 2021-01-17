@@ -6,13 +6,13 @@
 
 hpms::LuaScriptManager& hpms::LuaScriptManager::GetSingleton()
 {
-    static LuaScriptManager instance;
-    return instance;
+    return *GetSingletonPtr();
 }
 
 hpms::LuaScriptManager* hpms::LuaScriptManager::GetSingletonPtr()
 {
-    return &GetSingleton();
+    static auto* instance = hpms::SafeNew<hpms::LuaScriptManager>();
+    return instance;
 }
 
 hpms::LuaScriptManager::LuaScriptManager()
