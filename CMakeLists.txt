@@ -1,6 +1,6 @@
 # Engine project
 cmake_minimum_required(VERSION 3.15)
-project(HPMSEngineOgre)
+project(HPMSEngineOgreImpl)
 
 set(CMAKE_SHARED_LIBRARY_PREFIX)
 set(CMAKE_STATIC_LIBRARY_PREFIX)
@@ -50,14 +50,14 @@ set(SOURCES
         src/resource/HPMSWalkmapManager.cpp
         src/core/HPMSRenderToTexture.cpp)
 
-#add_library(HPMSEngineOgre SHARED ${SOURCES})
+#add_library(HPMSEngineOgreImpl SHARED ${SOURCES})
 
-add_executable(HPMSEngineOgre src/Main.cpp ${SOURCES})
-target_link_libraries(HPMSEngineOgre OgreMain RenderSystem_GL Codec_STBI ${SDL2_LIBRARY})
+add_executable(HPMSEngineOgreImpl src/Main.cpp ${SOURCES})
+target_link_libraries(HPMSEngineOgreImpl OgreMain RenderSystem_GL Codec_STBI ${SDL2_LIBRARY})
 
 
 
-add_custom_command(TARGET HPMSEngineOgre
+add_custom_command(TARGET HPMSEngineOgreImpl
         POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${OGRE_BUILD_PATH}/bin/ ${CMAKE_CURRENT_BINARY_DIR}
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_BINARY_DIR}/${BUILD_TYPE}/ ${CMAKE_CURRENT_BINARY_DIR}
