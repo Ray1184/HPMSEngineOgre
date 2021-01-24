@@ -1,38 +1,39 @@
 /*!
- * File HPMSOgreContext.h
+ * File HPMSOgreContextAdaptee.h
  */
 
 
 #pragma once
 
+#define DYNALO_EXPORT_SYMBOLS
+
+#include <symbol_helper.hpp>
 #include <Ogre.h>
 #include <OgreFileSystemLayer.h>
 #include <common/HPMSNamedWrapper.h>
 #include <SDL2/SDL.h>
 #include <input/HPMSInputHandler.h>
+#include <api/HPMSContextAdapter.h>
 
 namespace hpms
 {
-    struct WindowSettings
-    {
-        unsigned int width{320};
-        unsigned int height{200};
-        std::string name{"HPMS Template"};
-    };
+
     struct NativeWindowPair
     {
         Ogre::RenderWindow* render{nullptr};
         SDL_Window* native{nullptr};
     };
 
-    class OgreContext : public Ogre::FrameListener
+class OgreContextAdaptee : public Ogre::FrameListener, public hpms::ContextAdapter
     {
     public:
-        OgreContext(const WindowSettings& settings = {});
+        OgreContextAdaptee(hpms::CustomLogic* logic, const hpms::WindowSettings& settings = {});
 
-        virtual ~OgreContext();
+        virtual ~OgreContextAdaptee();
 
-        virtual void Run();
+        virtual void Run() override;
+
+
 
     protected:
         virtual bool Setup();
@@ -51,15 +52,15 @@ namespace hpms
 
         virtual void LoadResources();
 
-        virtual void CustomCreateScene() = 0;
+        virtual void CustomCreateScene();
 
-        virtual void CustomDestroyScene() = 0;
+        virtual void CustomDestroyScene();
 
         virtual void CustomInput(const std::vector<hpms::KeyEvent>& keyEvents,
                                  const std::vector<hpms::MouseEvent>& mouseBussonEvents, unsigned int x,
-                                 unsigned int y) = 0;
+                                 unsigned int y);
 
-        virtual void CustomUpdate() = 0;
+        virtual void CustomUpdate();
 
         bool frameRenderingQueued(const Ogre::FrameEvent& evt) override;
 
@@ -102,7 +103,7 @@ namespace hpms
 
         inline void SetShutDown(bool shutDown)
         {
-            OgreContext::shutDown = shutDown;
+            OgreContextAdaptee::shutDown = shutDown;
         }
 
     private:
@@ -115,7 +116,6 @@ namespace hpms
         Ogre::SceneManager* sceneMgr;
         NativeWindowPair windowPair;
         WindowSettings windowSettings;
-        char polygonRenderingMode;
         bool shutDown;
         hpms::InputHandler inputHandler;
         std::vector<KeyEvent> keyStates{};
@@ -125,3 +125,7 @@ namespace hpms
 
     };
 }
+
+DYNALO_EXPORT hpms::ContextAdapter* DYNALO_CALL CreateContext(hpms::CustomLogic* logic, const hpms::WindowSettings& settings = {});
+
+DYNALO_EXPORT void DYNALO_CALL DestroyContext(hpms::ContextAdapter* context);

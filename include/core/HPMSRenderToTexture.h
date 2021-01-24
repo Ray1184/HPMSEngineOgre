@@ -6,7 +6,7 @@
 #pragma once
 
 #include <OgreRectangle2D.h>
-#include <core/HPMSOgreContext.h>
+#include <core/HPMSOgreContextAdaptee.h>
 
 #define RTT_MATERIAL_NAME "RTTMaterial"
 #define RTT_TEXTURE_NAME "RTTTex"
