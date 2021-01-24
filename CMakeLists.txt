@@ -9,6 +9,11 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 set(OGRE_VERSION v1.12.9)
 set(PODS_VERSION master)
+set(HPMSAPI_VERSION main)
+
+if (NOT DEFINED DEP_PATH)
+    set(DEP_PATH ${CMAKE_CURRENT_BINARY_DIR}/_deps)
+endif ()
 
 string(TOLOWER ${CMAKE_BUILD_TYPE} BUILD_TYPE)
 if (BUILD_TYPE STREQUAL "debug")
@@ -19,6 +24,12 @@ endif ()
 
 
 include(cmake/Shared.cmake)
+
+
+# Other libraries setup.
+install_from_repo(https://github.com/mtrempoltsev/pods.git PODS ${PODS_VERSION} FALSE /include/)
+
+install_from_repo(https://github.com/Ray1184/HPMSApi.git HPMSAPI ${HPMSAPI_VERSION} TRUE /include/)
 
 # Ogre setup.
 set(OGRE_BUILD_PATH ${PROJECT_BINARY_DIR}/_deps/ogre-build)
@@ -36,20 +47,20 @@ find_package(SDL2 REQUIRED)
 
 include_directories(include)
 
-# Other libraries setup.
-install_from_repo(https://github.com/mtrempoltsev/pods.git PODS ${PODS_VERSION} FALSE /include/)
+include_directories(${DEP_PATH}/dynalo-src/include/dynalo)
+include_directories(${DEP_PATH}/glm-src)
 
 set(SOURCES
         src/input/HPMSInputHandler.cpp
         src/common/HPMSUtils.cpp
-        src/core/HPMSOgreContext.cpp
+        src/core/HPMSOgreContextAdaptee.cpp
         src/thirdparty/Vector2D.cpp
         src/thirdparty/InputHelper.cpp
         src/resource/HPMSLuaScript.cpp
         src/resource/HPMSLuaScriptManager.cpp
         src/resource/HPMSWalkmap.cpp
         src/resource/HPMSWalkmapManager.cpp
-        src/core/HPMSRenderToTexture.cpp)
+        src/core/HPMSRenderToTexture.cpp src/core/HPMSEntityAdaptee.cpp src/core/HPMSSceneManagerAdaptee.cpp)
 
 #add_library(HPMSEngineOgreImpl SHARED ${SOURCES})
 
