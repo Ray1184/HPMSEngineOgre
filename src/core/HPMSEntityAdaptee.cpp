@@ -4,6 +4,7 @@
 
 #include <core/HPMSEntityAdaptee.h>
 #include <core/HPMSEntityHelper.h>
+#include <core/HPMSAnimationAdaptee.h>
 
 std::string hpms::EntityAdaptee::GetName()
 {
@@ -79,6 +80,7 @@ void hpms::EntityAdaptee::SetVisible(bool visible)
 
 bool hpms::EntityAdaptee::IsVisible()
 {
+    Check(ogreEntity);
     return ogreEntity->isVisible();
 }
 
@@ -105,17 +107,52 @@ void hpms::EntityAdaptee::SetMode(hpms::EntityMode mode)
 }
 
 
-hpms::EntityAdaptee::EntityAdaptee(hpms::OgreContextAdaptee* ctx, const std::string& name) : AdapteeCommon(ctx), mode(hpms::EntityMode::COLOR_AND_DEPTH)
+std::vector<hpms::AnimationAdapter*>& hpms::EntityAdaptee::GetAllAnimations()
+{
+    return animList;
+}
+
+hpms::AnimationAdapter* hpms::EntityAdaptee::GetAnimationByName(const std::string& animName)
+{
+    return animMap[animName];
+}
+
+void hpms::EntityAdaptee::AttachObjectToBone(const std::string& boneName, hpms::ActorAdapter* object,
+                                             const glm::vec3& offsetPosition, const glm::quat& offsetOrientation)
+{
+    Check(ogreEntity);
+    Ogre::Vector3 posOff(offsetPosition.x, offsetPosition.y, offsetPosition.z);
+    Ogre::Quaternion rotOff(offsetOrientation.w, offsetOrientation.x, offsetOrientation.y, offsetOrientation.z);
+
+    if (auto* e = dynamic_cast<EntityAdaptee*>(object))
+    {
+        ogreEntity->attachObjectToBone(boneName, e->ogreEntity, rotOff, posOff);
+    }
+    // TODO Scene node management.
+}
+
+hpms::EntityAdaptee::EntityAdaptee(hpms::OgreContextAdaptee* ctx, const std::string& name) : AdapteeCommon(ctx),
+                                                                                             mode(hpms::EntityMode::COLOR_AND_DEPTH)
 {
     HPMS_ASSERT(ctx->GetSceneManager(), "Scene manager cannot be null.");
     ogreEntity = ctx->GetSceneManager()->createEntity(name);
+    for (auto& it : ogreEntity->getAllAnimationStates()->getAnimationStates())
+    {
+        auto* animAdaptee = hpms::SafeNew<hpms::AnimationAdaptee>(it.second);
+        animList.push_back(animAdaptee);
+        animMap[it.first] = animAdaptee;
+    }
+
 }
 
 hpms::EntityAdaptee::~EntityAdaptee()
 {
     hpms::SafeDeleteRaw(ogreEntity);
+    for (auto* animAdaptee : animList)
+    {
+        hpms::SafeDelete(animAdaptee);
+    }
 }
-
 
 hpms::EntityAdapter* CreateEntity(hpms::ContextAdapter* ctx, const std::string& name) DYNALO_CALL {
     return hpms::SafeNew<hpms::EntityAdaptee>((hpms::OgreContextAdaptee*) ctx, name);

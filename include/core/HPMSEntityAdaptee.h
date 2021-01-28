@@ -11,7 +11,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <Ogre.h>
-#include "HPMSOgreContextAdaptee.h"
+#include <core/HPMSOgreContextAdaptee.h>
+#include <vector>
+#include <map>
 
 namespace hpms
 {
@@ -20,9 +22,11 @@ namespace hpms
     private:
         Ogre::Entity* ogreEntity;
         hpms::EntityMode mode;
+        std::map<std::string, hpms::AnimationAdapter*> animMap;
+        std::vector<hpms::AnimationAdapter*> animList;
 
     public:
-        explicit EntityAdaptee(hpms::OgreContextAdaptee* ctx, const std::string& name);
+        EntityAdaptee(hpms::OgreContextAdaptee* ctx, const std::string& name);
 
         virtual ~EntityAdaptee();
 
@@ -45,6 +49,14 @@ namespace hpms
         bool IsVisible() override;
 
         void SetMode(EntityMode mode) override;
+
+        virtual std::vector<hpms::AnimationAdapter*>& GetAllAnimations() override;
+
+        virtual AnimationAdapter* GetAnimationByName(const std::string& animName) override;
+
+        virtual void
+        AttachObjectToBone(const std::string& boneName, hpms::ActorAdapter* object, const glm::vec3& offsetPosition,
+                           const glm::quat& offsetOrientation) override;
 
     };
 }

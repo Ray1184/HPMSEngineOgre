@@ -27,7 +27,7 @@ namespace hpms
 class OgreContextAdaptee : public Ogre::FrameListener, public hpms::ContextAdapter
     {
     public:
-        OgreContextAdaptee(hpms::CustomLogic* logic, const hpms::WindowSettings& settings = {});
+        explicit OgreContextAdaptee(hpms::CustomLogic* logic, const hpms::WindowSettings& settings = {});
 
         virtual ~OgreContextAdaptee();
 
