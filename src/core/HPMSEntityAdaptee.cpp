@@ -5,6 +5,7 @@
 #include <core/HPMSEntityAdaptee.h>
 #include <core/HPMSEntityHelper.h>
 #include <core/HPMSAnimationAdaptee.h>
+#include <core/HPMSSceneNodeAdaptee.h>
 
 std::string hpms::EntityAdaptee::GetName()
 {
@@ -123,12 +124,10 @@ void hpms::EntityAdaptee::AttachObjectToBone(const std::string& boneName, hpms::
     Check(ogreEntity);
     Ogre::Vector3 posOff(offsetPosition.x, offsetPosition.y, offsetPosition.z);
     Ogre::Quaternion rotOff(offsetOrientation.w, offsetOrientation.x, offsetOrientation.y, offsetOrientation.z);
-
     if (auto* e = dynamic_cast<EntityAdaptee*>(object))
     {
-        ogreEntity->attachObjectToBone(boneName, e->ogreEntity, rotOff, posOff);
+        ogreEntity->attachObjectToBone(boneName, e->GetOgreEntity(), rotOff, posOff);
     }
-    // TODO Scene node management.
 }
 
 hpms::EntityAdaptee::EntityAdaptee(hpms::OgreContextAdaptee* ctx, const std::string& name) : AdapteeCommon(ctx),

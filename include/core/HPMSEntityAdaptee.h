@@ -58,6 +58,11 @@ namespace hpms
         AttachObjectToBone(const std::string& boneName, hpms::ActorAdapter* object, const glm::vec3& offsetPosition,
                            const glm::quat& offsetOrientation) override;
 
+        inline Ogre::Entity* GetOgreEntity() const
+        {
+            return ogreEntity;
+        }
+
     };
 }
 
