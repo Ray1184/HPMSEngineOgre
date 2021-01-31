@@ -60,7 +60,14 @@ set(SOURCES
         src/resource/HPMSLuaScriptManager.cpp
         src/resource/HPMSWalkmap.cpp
         src/resource/HPMSWalkmapManager.cpp
-        src/core/HPMSRenderToTexture.cpp src/core/HPMSEntityAdaptee.cpp src/core/HPMSSceneManagerAdaptee.cpp src/core/HPMSAnimationAdaptee.cpp src/core/HPMSSceneNodeAdaptee.cpp)
+        src/core/HPMSRenderToTexture.cpp
+        src/core/HPMSEntityAdaptee.cpp
+        src/core/HPMSAnimationAdaptee.cpp
+        src/core/HPMSSceneNodeAdaptee.cpp
+        src/core/HPMSCameraAdaptee.cpp
+        src/core/HPMSBackgroundImageAdaptee.cpp
+        src/core/HPMSOverlayImageAdaptee.cpp
+        src/core/HPMSLightAdaptee.cpp)
 
 #add_library(HPMSEngineOgreImpl SHARED ${SOURCES})
 
