@@ -5,6 +5,9 @@
 
 #pragma once
 
+#define DYNALO_EXPORT_SYMBOLS
+
+#include <symbol_helper.hpp>
 #include <api/HPMSEntityAdapter.h>
 #include <core/HPMSAdapteeCommon.h>
 #include <common/HPMSUtils.h>

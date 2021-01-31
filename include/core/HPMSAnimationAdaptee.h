@@ -4,12 +4,17 @@
 
 #pragma once
 
+#define DYNALO_EXPORT_SYMBOLS
+
+#include <symbol_helper.hpp>
 #include <api/HPMSAnimationAdapter.h>
+#include <api/HPMSContextAdapter.h>
 #include <Ogre.h>
+#include <core/HPMSAdapteeCommon.h>
 
 namespace hpms
 {
-    class AnimationAdaptee : public hpms::AnimationAdapter
+    class AnimationAdaptee : public hpms::AnimationAdapter, public AdapteeCommon
     {
     private:
         Ogre::AnimationState* ogreAnim;
@@ -29,3 +34,4 @@ namespace hpms
         virtual void SetLoop(bool loop) override;
     };
 }
+

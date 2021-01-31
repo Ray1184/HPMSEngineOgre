@@ -5,7 +5,6 @@
 #include <core/HPMSEntityAdaptee.h>
 #include <core/HPMSEntityHelper.h>
 #include <core/HPMSAnimationAdaptee.h>
-#include <core/HPMSSceneNodeAdaptee.h>
 
 std::string hpms::EntityAdaptee::GetName()
 {
@@ -153,7 +152,7 @@ hpms::EntityAdaptee::~EntityAdaptee()
     }
 }
 
-hpms::EntityAdapter* CreateEntity(hpms::ContextAdapter* ctx, const std::string& name) DYNALO_CALL {
+hpms::EntityAdapter* CreateEntity(hpms::ContextAdapter* ctx, const std::string& name) {
     return hpms::SafeNew<hpms::EntityAdaptee>((hpms::OgreContextAdaptee*) ctx, name);
 }
 

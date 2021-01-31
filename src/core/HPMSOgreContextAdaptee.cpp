@@ -236,7 +236,7 @@ void hpms::OgreContextAdaptee::CustomUpdate()
 }
 
 
-hpms::ContextAdapter* CreateContext(hpms::CustomLogic* logic, const hpms::WindowSettings& settings) DYNALO_CALL {
+hpms::ContextAdapter* CreateContext(hpms::CustomLogic* logic, const hpms::WindowSettings& settings) {
     return hpms::SafeNew<hpms::OgreContextAdaptee>(logic, settings);
 }
 
