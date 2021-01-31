@@ -62,8 +62,3 @@ namespace hpms
         }
     };
 }
-
-
-DYNALO_EXPORT hpms::SceneNodeAdapter* DYNALO_CALL CreateSceneNode(hpms::ContextAdapter* ctx, const std::string& name);
-
-DYNALO_EXPORT void DYNALO_CALL DestroySceneNode(hpms::SceneNodeAdapter* sceneNode);

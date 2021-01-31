@@ -130,12 +130,3 @@ hpms::SceneNodeAdaptee::~SceneNodeAdaptee()
 {
     hpms::SafeDeleteRaw(ogreNode);
 }
-
-hpms::SceneNodeAdapter* CreateSceneNode(hpms::ContextAdapter* ctx, const std::string& name) {
-    return hpms::SafeNew<hpms::SceneNodeAdaptee>((hpms::OgreContextAdaptee*) ctx, name);
-}
-
-void DestroySceneNode(hpms::SceneNodeAdapter* node)
-{
-    hpms::SafeDelete(node);
-}

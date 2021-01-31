@@ -68,8 +68,3 @@ namespace hpms
 
     };
 }
-
-
-DYNALO_EXPORT hpms::EntityAdapter* DYNALO_CALL CreateEntity(hpms::ContextAdapter* ctx, const std::string& name);
-
-DYNALO_EXPORT void DYNALO_CALL DestroyEntity(hpms::EntityAdapter* entity);

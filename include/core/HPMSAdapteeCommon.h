@@ -24,7 +24,6 @@ namespace hpms
         template <typename T>
         inline void Check(T* ptr) const
         {
-            Check();
             HPMS_ASSERT(ptr, "Adaptee cannot be null.");
         }
 

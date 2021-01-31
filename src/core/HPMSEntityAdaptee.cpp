@@ -151,12 +151,3 @@ hpms::EntityAdaptee::~EntityAdaptee()
         hpms::SafeDelete(animAdaptee);
     }
 }
-
-hpms::EntityAdapter* CreateEntity(hpms::ContextAdapter* ctx, const std::string& name) {
-    return hpms::SafeNew<hpms::EntityAdaptee>((hpms::OgreContextAdaptee*) ctx, name);
-}
-
-void DestroyEntity(hpms::EntityAdapter* entity)
-{
-    hpms::SafeDelete(entity);
-}
