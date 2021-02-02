@@ -113,20 +113,22 @@ hpms::SceneNodeAdapter* hpms::SceneNodeAdaptee::GetParent()
 }
 
 
-hpms::SceneNodeAdaptee::SceneNodeAdaptee(hpms::OgreContextAdaptee* ctx, const std::string& name) : AdapteeCommon(ctx), parent(nullptr)
+hpms::SceneNodeAdaptee::SceneNodeAdaptee(hpms::OgreContext* ctx, const std::string& name) : AdapteeCommon(ctx), parent(nullptr)
 {
     HPMS_ASSERT(ctx->GetSceneManager(), "Scene manager cannot be null.");
     ogreNode = ctx->GetSceneManager()->getRootSceneNode()->createChildSceneNode(name);
 }
 
-hpms::SceneNodeAdaptee::SceneNodeAdaptee(Ogre::SceneNode* ogreSceneNode, const std::string& name, SceneNodeAdapter* parent)
+hpms::SceneNodeAdaptee::SceneNodeAdaptee(Ogre::SceneNode* ogreSceneNode, const std::string& name, SceneNodeAdapter* parent, bool root)
         : AdapteeCommon(nullptr),
         ogreNode(ogreSceneNode),
-        parent(parent)
+        parent(parent),
+        root(root)
 {
 }
 
 hpms::SceneNodeAdaptee::~SceneNodeAdaptee()
 {
-    hpms::SafeDeleteRaw(ogreNode);
+    Check();
+    ((OgreContext*) ctx)->GetSceneManager()->destroySceneNode(ogreNode);
 }

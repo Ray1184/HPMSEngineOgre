@@ -8,7 +8,6 @@
 
 #include <symbol_helper.hpp>
 #include <api/HPMSAnimationAdapter.h>
-#include <api/HPMSContextAdapter.h>
 #include <Ogre.h>
 #include <core/HPMSAdapteeCommon.h>
 

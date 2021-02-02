@@ -48,3 +48,20 @@ bool hpms::LightAdaptee::IsVisible()
 {
     return false;
 }
+
+void hpms::LightAdaptee::SetColor(const glm::vec3& rgb)
+{
+
+}
+
+hpms::LightAdaptee::LightAdaptee(hpms::OgreContext* ctx) : AdapteeCommon(ctx)
+{
+    Check();
+    ogreLight = ((OgreContext*) ctx)->GetSceneManager()->createLight();
+}
+
+hpms::LightAdaptee::~LightAdaptee()
+{
+    Check();
+    ((OgreContext*) ctx)->GetSceneManager()->destroyLight(ogreLight);
+}

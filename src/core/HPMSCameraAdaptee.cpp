@@ -9,7 +9,7 @@ void hpms::CameraAdaptee::SetPosition(const glm::vec3& position)
     Check(ogreCamera);
     if (ogreCamera->getParentSceneNode())
     {
-        ogreCamera->getParentSceneNode()->setPosition(position.x, position.y, position.z));
+        ogreCamera->getParentSceneNode()->setPosition(position.x, position.y, position.z);
     } else
     {
         ogreCamera->setPosition(position.x, position.y, position.z);
@@ -75,12 +75,14 @@ void hpms::CameraAdaptee::SetFovY(float fovY)
     ogreCamera->setFOVy(Ogre::Radian(fovY));
 }
 
-hpms::CameraAdaptee::CameraAdaptee(hpms::OgreContextAdaptee* ctx, const std::string& name) : AdapteeCommon(ctx)
+hpms::CameraAdaptee::CameraAdaptee(hpms::OgreContext* ctx, const std::string& name) : AdapteeCommon(ctx)
 {
+    Check();
     ogreCamera = ctx->GetCamera();
 }
 
 hpms::CameraAdaptee::~CameraAdaptee()
 {
-
+    Check();
+    ((OgreContext*) ctx)->GetSceneManager()->destroyCamera(ogreCamera);
 }

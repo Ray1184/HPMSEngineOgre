@@ -34,7 +34,7 @@ install_from_repo(https://github.com/Ray1184/HPMSApi.git HPMSAPI ${HPMSAPI_VERSI
 # Ogre setup.
 set(OGRE_BUILD_PATH ${PROJECT_BINARY_DIR}/_deps/ogre-build)
 set(CORE_INCLUDES "/OgreMain/include/")
-set(COMPONENTS_INCLUDES "/Components/Overlay/include/;/Components/Property/include/;/Components/HLMS/include/")
+set(COMPONENTS_INCLUDES "/Components/Overlay/include/;/Components/Property/include/")
 set(PLUGINS_INCLUDES "/PlugIns/STBICodec/include/;/PlugIns/ParticleFX/include/")
 set(DEP_INCLUDES "/RenderSystems/GL/include/")
 set(INCLUDES ${CORE_INCLUDES};${COMPONENTS_INCLUDES};${PLUGINS_INCLUDES};${RENDERER_INCLUDES};${DEP_INCLUDES})
@@ -53,7 +53,7 @@ include_directories(${DEP_PATH}/glm-src)
 set(SOURCES
         src/input/HPMSInputHandler.cpp
         src/common/HPMSUtils.cpp
-        src/core/HPMSOgreContextAdaptee.cpp
+        src/core/HPMSOgreContext.cpp
         src/thirdparty/Vector2D.cpp
         src/thirdparty/InputHelper.cpp
         src/resource/HPMSLuaScript.cpp
@@ -67,19 +67,25 @@ set(SOURCES
         src/core/HPMSCameraAdaptee.cpp
         src/core/HPMSBackgroundImageAdaptee.cpp
         src/core/HPMSOverlayImageAdaptee.cpp
-        src/core/HPMSLightAdaptee.cpp)
+        src/core/HPMSLightAdaptee.cpp
+        src/core/HPMSSupplierAdaptee.cpp
+        src/core/HPMSSimulatorAdaptee.cpp)
 
-#add_library(HPMSEngineOgreImpl SHARED ${SOURCES})
+add_definitions(-DBACKEND_IMPL_NAME="Ogre 3D ${OGRE_VERSION}")
 
-add_executable(HPMSEngineOgreImpl src/Main.cpp ${SOURCES})
-target_link_libraries(HPMSEngineOgreImpl OgreMain RenderSystem_GL Codec_STBI ${SDL2_LIBRARY})
+add_library(HPMSEngineOgreImpl SHARED ${SOURCES})
 
+
+#add_executable(HPMSEngineOgreImpl src/Main.cpp ${SOURCES})
+target_link_libraries(HPMSEngineOgreImpl OgreMain OgreOverlay RenderSystem_GL Codec_STBI ${SDL2_LIBRARY})
 
 
 add_custom_command(TARGET HPMSEngineOgreImpl
         POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OGRE_BUILD_PATH}/bin/ ${CMAKE_CURRENT_BINARY_DIR}
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_BINARY_DIR}/${BUILD_TYPE}/ ${CMAKE_CURRENT_BINARY_DIR}
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/ext/ ${CMAKE_CURRENT_BINARY_DIR}/engine/
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data/ ${CMAKE_CURRENT_BINARY_DIR}/data/
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OGRE_BUILD_PATH}/bin/ ${CMAKE_CURRENT_BINARY_DIR}/engine/
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_BINARY_DIR}/${BUILD_TYPE}/ ${CMAKE_CURRENT_BINARY_DIR}/engine/
         COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/debug
         COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/release
         COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/minsizerel
@@ -88,6 +94,4 @@ add_custom_command(TARGET HPMSEngineOgreImpl
         COMMAND ${CMAKE_COMMAND} -E rm ${CMAKE_CURRENT_BINARY_DIR}/resources.cfg
         COMMAND ${CMAKE_COMMAND} -E rm ${CMAKE_CURRENT_BINARY_DIR}/samples.cfg
         COMMAND ${CMAKE_COMMAND} -E rm ${CMAKE_CURRENT_BINARY_DIR}/tests.cfg
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/ext/ ${CMAKE_CURRENT_BINARY_DIR}/ext/
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data/ ${CMAKE_CURRENT_BINARY_DIR}/data/
         )

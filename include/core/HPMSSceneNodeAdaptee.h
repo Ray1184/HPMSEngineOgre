@@ -11,7 +11,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <Ogre.h>
-#include <core/HPMSOgreContextAdaptee.h>
+#include <core/HPMSOgreContext.h>
 #include <vector>
 #include <map>
 
@@ -22,11 +22,12 @@ namespace hpms
     private:
         Ogre::SceneNode* ogreNode;
         SceneNodeAdapter* parent;
+        bool root;
 
     public:
-        SceneNodeAdaptee(hpms::OgreContextAdaptee* ctx, const std::string& name);
+        SceneNodeAdaptee(hpms::OgreContext* ctx, const std::string& name);
 
-        SceneNodeAdaptee(Ogre::SceneNode* ogreSceneNode, const std::string& name, SceneNodeAdapter* parent);
+        SceneNodeAdaptee(Ogre::SceneNode* ogreSceneNode, const std::string& name, SceneNodeAdapter* parent, bool root = false);
 
         virtual ~SceneNodeAdaptee();
 

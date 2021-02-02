@@ -4,7 +4,7 @@
 
 
 
-#include <core/HPMSOgreContextAdaptee.h>
+#include <core/HPMSOgreContext.h>
 #include <iostream>
 #include <OgreRectangle2D.h>
 #include <core/HPMSEntityHelper.h>

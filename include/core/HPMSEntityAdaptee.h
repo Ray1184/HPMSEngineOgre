@@ -14,7 +14,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <Ogre.h>
-#include <core/HPMSOgreContextAdaptee.h>
+#include <core/HPMSOgreContext.h>
 #include <vector>
 #include <map>
 
@@ -29,7 +29,7 @@ namespace hpms
         std::vector<hpms::AnimationAdapter*> animList;
 
     public:
-        EntityAdaptee(hpms::OgreContextAdaptee* ctx, const std::string& name);
+        EntityAdaptee(hpms::OgreContext* ctx, const std::string& name);
 
         virtual ~EntityAdaptee();
 

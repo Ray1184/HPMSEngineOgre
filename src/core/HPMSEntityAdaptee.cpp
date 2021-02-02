@@ -129,10 +129,10 @@ void hpms::EntityAdaptee::AttachObjectToBone(const std::string& boneName, hpms::
     }
 }
 
-hpms::EntityAdaptee::EntityAdaptee(hpms::OgreContextAdaptee* ctx, const std::string& name) : AdapteeCommon(ctx),
-                                                                                             mode(hpms::EntityMode::COLOR_AND_DEPTH)
+hpms::EntityAdaptee::EntityAdaptee(hpms::OgreContext* ctx, const std::string& name) : AdapteeCommon(ctx),
+                                                                                      mode(hpms::EntityMode::COLOR_AND_DEPTH)
 {
-    HPMS_ASSERT(ctx->GetSceneManager(), "Scene manager cannot be null.");
+    Check();
     ogreEntity = ctx->GetSceneManager()->createEntity(name);
     for (auto& it : ogreEntity->getAllAnimationStates()->getAnimationStates())
     {
@@ -145,9 +145,9 @@ hpms::EntityAdaptee::EntityAdaptee(hpms::OgreContextAdaptee* ctx, const std::str
 
 hpms::EntityAdaptee::~EntityAdaptee()
 {
-    hpms::SafeDeleteRaw(ogreEntity);
     for (auto* animAdaptee : animList)
     {
         hpms::SafeDelete(animAdaptee);
     }
+    ((OgreContext*) ctx)->GetSceneManager()->destroyEntity(ogreEntity);
 }

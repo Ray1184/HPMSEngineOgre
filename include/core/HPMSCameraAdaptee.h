@@ -6,7 +6,7 @@
 
 #include <api/HPMSCameraAdapter.h>
 #include <core/HPMSAdapteeCommon.h>
-#include <core/HPMSOgreContextAdaptee.h>
+#include <core/HPMSOgreContext.h>
 #include <glm/gtc/quaternion.hpp>
 
 namespace hpms
@@ -16,7 +16,7 @@ namespace hpms
     private:
         Ogre::Camera* ogreCamera;
     public:
-        CameraAdaptee(hpms::OgreContextAdaptee* ctx, const std::string& name);
+        CameraAdaptee(hpms::OgreContext* ctx, const std::string& name);
 
         virtual ~CameraAdaptee();
 

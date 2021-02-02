@@ -5,12 +5,20 @@
 #pragma once
 
 #include <api/HPMSLightAdapter.h>
+#include <core/HPMSAdapteeCommon.h>
+#include <core/HPMSCameraAdaptee.h>
 
 namespace hpms
 {
     class LightAdaptee : public LightAdapter, public AdapteeCommon
     {
+    private:
+        Ogre::Light* ogreLight;
     public:
+        LightAdaptee(hpms::OgreContext* ctx);
+
+        virtual ~LightAdaptee();
+        
         virtual std::string GetName() override;
 
         virtual void SetPosition(const glm::vec3& position) override;
@@ -28,5 +36,7 @@ namespace hpms
         virtual void SetVisible(bool visible) override;
 
         virtual bool IsVisible() override;
+
+        virtual void SetColor(const glm::vec3& rgb) override;
     };
 }

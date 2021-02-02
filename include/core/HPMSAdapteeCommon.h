@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <api/HPMSContextAdapter.h>
+#include <core/HPMSOgreContext.h>
 #include <common/HPMSUtils.h>
 
 namespace hpms
@@ -13,7 +13,7 @@ namespace hpms
     class AdapteeCommon
     {
     public:
-        inline AdapteeCommon(ContextAdapter* ctx) : ctx(ctx)
+        inline AdapteeCommon(OgreContext* ctx) : ctx(ctx)
         {}
 
         inline void Check() const
@@ -28,7 +28,7 @@ namespace hpms
         }
 
     protected:
-        ContextAdapter* ctx;
+        hpms::OgreContext* ctx;
 
     };
 }
