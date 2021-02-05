@@ -47,6 +47,7 @@ find_package(SDL2 REQUIRED)
 
 include_directories(include)
 
+include_directories(${DEP_PATH}/dynalo-src/include/dynalo)
 include_directories(${DEP_PATH}/glm-src)
 
 set(SOURCES

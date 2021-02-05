@@ -4,20 +4,9 @@
 
 #pragma once
 
-#ifdef WIN32
-#define HPMS_DLL DYNALO_DEMANGLE __declspec(dllexport)
-#else
-#define HPMS_DLL DYNALO_DEMANGLE
-#endif
+#define DYNALO_EXPORT_SYMBOLS
 
-#if !defined(HPMS_CALL)
-#ifdef _MSC_VER
-#define HPMS_CALL __cdecl
-#else
-#define HPMS_CALL
-#endif
-#endif
-
+#include <symbol_helper.hpp>
 
 #include <api/HPMSSupplierAdapter.h>
 #include <core/HPMSCameraAdaptee.h>
@@ -70,6 +59,6 @@ namespace hpms
 
 hpms::OgreContext* ctx;
 
-HPMS_DLL hpms::SupplierAdapter* HPMS_CALL CreateSupplier(hpms::WindowSettings& windowSettings);
+DYNALO_EXPORT hpms::SupplierAdapter* DYNALO_CALL CreateSupplier(hpms::WindowSettings& windowSettings);
 
-HPMS_DLL void HPMS_CALL DestroySupplier(hpms::SupplierAdapter*& supplier);
+DYNALO_EXPORT void DYNALO_CALL DestroySupplier(hpms::SupplierAdapter*& supplier);
