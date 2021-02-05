@@ -14,7 +14,6 @@ namespace hpms
     {
     private:
 
-        WindowSettings windowSettings;
         CustomLogic* logic;
         hpms::InputHandler inputHandler;
         std::vector<KeyEvent> keyStates{};
@@ -25,7 +24,7 @@ namespace hpms
         virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt) override;
 
     public:
-        SimulatorAdaptee(hpms::OgreContext* ctx, hpms::CustomLogic* logic, hpms::WindowSettings& windowSettings);
+        SimulatorAdaptee(hpms::OgreContext* ctx, hpms::CustomLogic* logic);
 
         virtual ~SimulatorAdaptee();
 

@@ -66,6 +66,7 @@ hpms::SupplierAdaptee::SupplierAdaptee(hpms::OgreContext* ctx) : AdapteeCommon(c
 hpms::SupplierAdaptee::~SupplierAdaptee()
 {
     FreeItems();
+    hpms::SafeDelete(ctx);
 }
 
 std::string hpms::SupplierAdaptee::GetImplName()
@@ -78,3 +79,22 @@ std::string hpms::SupplierAdaptee::GetImplName()
 }
 
 
+hpms::SupplierAdapter* CreateSupplier(hpms::WindowSettings& windowSettings) {
+    try
+    {
+        hpms::OgreWindowSettings ogreSettings;
+        ogreSettings.name = windowSettings.name;
+        ogreSettings.width = windowSettings.width;
+        ogreSettings.height = windowSettings.height;
+        ctx = hpms::SafeNew<hpms::OgreContext>(ogreSettings);
+        return hpms::SafeNew<hpms::SupplierAdaptee>(ctx);
+    } catch (std::exception& e) {
+        LOG_ERROR(e.what());
+    }
+    return nullptr;
+}
+
+void DestroySupplier(hpms::SupplierAdapter*& supplier)
+{
+    hpms::SafeDelete(supplier);
+}

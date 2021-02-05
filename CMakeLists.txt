@@ -52,7 +52,6 @@ include_directories(${DEP_PATH}/glm-src)
 
 set(SOURCES
         src/input/HPMSInputHandler.cpp
-        src/common/HPMSUtils.cpp
         src/core/HPMSOgreContext.cpp
         src/thirdparty/Vector2D.cpp
         src/thirdparty/InputHelper.cpp
@@ -77,21 +76,23 @@ add_library(HPMSEngineOgreImpl SHARED ${SOURCES})
 
 
 #add_executable(HPMSEngineOgreImpl src/Main.cpp ${SOURCES})
-target_link_libraries(HPMSEngineOgreImpl OgreMain OgreOverlay RenderSystem_GL Codec_STBI ${SDL2_LIBRARY})
+target_link_libraries(HPMSEngineOgreImpl HPMSApi OgreMain OgreOverlay RenderSystem_GL Codec_STBI ${SDL2_LIBRARY})
 
 
 add_custom_command(TARGET HPMSEngineOgreImpl
         POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/ext/ ${CMAKE_CURRENT_BINARY_DIR}/engine/
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/engine/ ${CMAKE_CURRENT_BINARY_DIR}/engine/
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/data/ ${CMAKE_CURRENT_BINARY_DIR}/data/
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OGRE_BUILD_PATH}/bin/ ${CMAKE_CURRENT_BINARY_DIR}/engine/
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_BINARY_DIR}/${BUILD_TYPE}/ ${CMAKE_CURRENT_BINARY_DIR}/engine/
-        COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/debug
-        COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/release
-        COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/minsizerel
-        COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/relwithdebinfo
-        COMMAND ${CMAKE_COMMAND} -E rm ${CMAKE_CURRENT_BINARY_DIR}/plugins.cfg
-        COMMAND ${CMAKE_COMMAND} -E rm ${CMAKE_CURRENT_BINARY_DIR}/resources.cfg
-        COMMAND ${CMAKE_COMMAND} -E rm ${CMAKE_CURRENT_BINARY_DIR}/samples.cfg
-        COMMAND ${CMAKE_COMMAND} -E rm ${CMAKE_CURRENT_BINARY_DIR}/tests.cfg
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${OGRE_BUILD_PATH}/bin/ ${CMAKE_CURRENT_BINARY_DIR}/_bin/
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_BINARY_DIR}/_bin/${BUILD_TYPE}/ ${CMAKE_CURRENT_BINARY_DIR}/_bin/
+        COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/_bin/debug
+        COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/_bin/release
+        COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/_bin/minsizerel
+        COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/_bin/relwithdebinfo
+        COMMAND ${CMAKE_COMMAND} -E rm ${CMAKE_CURRENT_BINARY_DIR}/_bin/plugins.cfg
+        COMMAND ${CMAKE_COMMAND} -E rm ${CMAKE_CURRENT_BINARY_DIR}/_bin/resources.cfg
+        COMMAND ${CMAKE_COMMAND} -E rm ${CMAKE_CURRENT_BINARY_DIR}/_bin/samples.cfg
+        COMMAND ${CMAKE_COMMAND} -E rm ${CMAKE_CURRENT_BINARY_DIR}/_bin/tests.cfg
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_BINARY_DIR}/_bin/ ${CMAKE_CURRENT_BINARY_DIR}/
+        COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/_bin
         )

@@ -4,6 +4,10 @@
 
 #pragma once
 
+#define DYNALO_EXPORT_SYMBOLS
+
+#include <symbol_helper.hpp>
+
 #include <api/HPMSSupplierAdapter.h>
 #include <core/HPMSCameraAdaptee.h>
 #include <core/HPMSLightAdaptee.h>
@@ -25,6 +29,7 @@ namespace hpms
         std::vector<LightAdapter*> lights;
 
         void FreeItems();
+
     public:
         explicit SupplierAdaptee(hpms::OgreContext* ctx);
 
@@ -48,5 +53,12 @@ namespace hpms
         virtual void SetAmbientLight(const glm::vec3& rgb) override;
 
         virtual std::string GetImplName() override;
+
     };
 }
+
+hpms::OgreContext* ctx;
+
+DYNALO_EXPORT hpms::SupplierAdapter* DYNALO_CALL CreateSupplier(hpms::WindowSettings& windowSettings);
+
+DYNALO_EXPORT void DYNALO_CALL DestroySupplier(hpms::SupplierAdapter*& supplier);

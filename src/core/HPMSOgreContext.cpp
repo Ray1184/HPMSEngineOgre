@@ -5,26 +5,30 @@
 #include <core/HPMSOgreContext.h>
 #include <SDL2/SDL_syswm.h>
 
-hpms::OgreContext::OgreContext() : root(nullptr),
+hpms::OgreContext::OgreContext(const OgreWindowSettings& settings) : root(nullptr),
                                    camera(nullptr),
                                    sceneMgr(nullptr),
-                                   resourcesCfg(HPMS_OGRE_CONFIG_FOLDER "Resources.ini"),
-                                   pluginsCfg(HPMS_OGRE_CONFIG_FOLDER "Plugins.ini"),
-                                   shutDown(false)
+                                   resourcesCfg(HPMS_ENGINE_FILES_FOLDER "Resources.ini"),
+                                   pluginsCfg(HPMS_ENGINE_FILES_FOLDER "Plugins.ini"),
+                                   shutDown(false),
+                                   settings(settings)
 {
     logManager = hpms::SafeNewRaw<Ogre::LogManager>();
-    logManager->createLog(HPMS_OGRE_CONFIG_FOLDER "Ogre.log", true, false, false);
+    logManager->createLog(HPMS_ENGINE_FILES_FOLDER "Ogre.log", true, false, false);
     fsLayer = hpms::SafeNewRaw<Ogre::FileSystemLayer>("FSData");
     root = hpms::SafeNewRaw<Ogre::Root>(pluginsCfg,
                                         fsLayer->getWritablePath(
-                                                HPMS_OGRE_CONFIG_FOLDER "Ogre.ini"),
+                                                HPMS_ENGINE_FILES_FOLDER "Ogre.ini"),
                                         fsLayer->getWritablePath(
-                                                HPMS_OGRE_CONFIG_FOLDER "Ogre.log"));
+                                                HPMS_ENGINE_FILES_FOLDER "Ogre.log"));
+
+    Setup();
 
 }
 
 hpms::OgreContext::~OgreContext()
 {
+    GetSceneManager()->destroyCamera(camera);
     root->destroySceneManager(GetSceneManager());
     hpms::SafeDeleteRaw(root);
     hpms::SafeDeleteRaw(fsLayer);
@@ -129,7 +133,7 @@ void hpms::OgreContext::CreateResourceListener()
 
 }
 
-bool hpms::OgreContext::Setup(const OgreWindowSettings& settings)
+bool hpms::OgreContext::Setup()
 {
     LOG_DEBUG("Initializing OGRE root.");
     InitRoot();
@@ -154,22 +158,6 @@ bool hpms::OgreContext::Setup(const OgreWindowSettings& settings)
 
     LOG_DEBUG("Loading OGRE resources.");
     LoadResources();
-
-    return true;
-}
-
-
-bool hpms::OgreContext::ManageClose() const
-{
-    if (windowPair.render->isClosed())
-    {
-        return false;
-    }
-
-    if (shutDown)
-    {
-        return false;
-    }
 
     return true;
 }

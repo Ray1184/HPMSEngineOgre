@@ -31,14 +31,12 @@ namespace hpms
         bool fullScreen{false};
     };
 
-class OgreContext
+    class OgreContext : public hpms::Object
     {
-    public:
-        explicit OgreContext();
+    private:
+        OgreWindowSettings settings;
 
-        virtual ~OgreContext();
-
-        bool Setup(const OgreWindowSettings& settings);
+        bool Setup();
 
         void InitRoot();
 
@@ -51,11 +49,16 @@ class OgreContext
         void CreateResourceListener();
 
         void LoadResources();
-
-        bool ManageClose() const;
-
-
     public:
+        explicit OgreContext(const OgreWindowSettings& settings);
+
+        virtual ~OgreContext();
+
+        inline virtual const std::string Name() const override
+        {
+            return "OgreContext";
+        }
+
         inline Ogre::FileSystemLayer* GetFsLayer() const
         {
             return fsLayer;
@@ -89,6 +92,12 @@ class OgreContext
         inline void SetShutDown(bool shutDown)
         {
             OgreContext::shutDown = shutDown;
+        }
+
+
+        inline bool IsShutDown() const
+        {
+            return shutDown;
         }
 
     private:

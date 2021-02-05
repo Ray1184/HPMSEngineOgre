@@ -8,15 +8,6 @@ void hpms::SimulatorAdaptee::Run()
 {
     Check();
     HPMS_ASSERT(logic, "Logic implementation cannot be null.");
-    OgreWindowSettings ogreSettings;
-    ogreSettings.name = windowSettings.name;
-    ogreSettings.width = windowSettings.width;
-    ogreSettings.height = windowSettings.height;
-    if (!ctx->Setup(ogreSettings))
-    {
-        LOG_ERROR("Error setting up OGRE subsystems.");
-        return;
-    }
     logic->OnCreate();
     ctx->GetRoot()->addFrameListener(this);
     LOG_DEBUG("OGRE subsystems initialization completed, starting rendering.");
@@ -25,10 +16,8 @@ void hpms::SimulatorAdaptee::Run()
     logic->OnDestroy();
 }
 
-hpms::SimulatorAdaptee::SimulatorAdaptee(hpms::OgreContext* ctx, hpms::CustomLogic* logic,
-                                         hpms::WindowSettings& windowSettings) : AdapteeCommon(ctx),
-                                                                                 logic(logic),
-                                                                                 windowSettings(windowSettings)
+hpms::SimulatorAdaptee::SimulatorAdaptee(hpms::OgreContext* ctx, hpms::CustomLogic* logic) : AdapteeCommon(ctx),
+                                                                                             logic(logic)
 {
 
 }
@@ -40,7 +29,12 @@ hpms::SimulatorAdaptee::~SimulatorAdaptee()
 
 bool hpms::SimulatorAdaptee::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
-    ctx->ManageClose();
+
+    if (ctx->GetRenderWindow()->isClosed() || ctx->IsShutDown())
+    {
+        return false;
+    }
+
     logic->OnUpdate(evt.timeSinceLastFrame);
     inputHandler.Update();
     inputHandler.HandleKeyboardEvent(keyStates);

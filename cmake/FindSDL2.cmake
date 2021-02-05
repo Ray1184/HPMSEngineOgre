@@ -77,6 +77,8 @@ SET(SDL2_SEARCH_PATHS
         /opt/csw # Blastwave
         /opt
         ${PROJECT_BINARY_DIR}/_deps/ogre-build/Dependencies
+        ${CMAKE_BINARY_DIR}/_deps/ogre-build/Dependencies
+        ${CMAKE_SOURCE_DIR}/_deps/ogre-build/Dependencies
         )
 
 FIND_PATH(SDL2_INCLUDE_DIR SDL.h
