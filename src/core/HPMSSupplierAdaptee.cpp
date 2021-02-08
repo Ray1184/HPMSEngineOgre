@@ -66,7 +66,8 @@ hpms::SupplierAdaptee::SupplierAdaptee(hpms::OgreContext* ctx) : AdapteeCommon(c
 hpms::SupplierAdaptee::~SupplierAdaptee()
 {
     FreeItems();
-    hpms::SafeDelete(ctx);
+    hpms::SafeDelete(camera);
+    hpms::SafeDelete(rootNode);
 }
 
 std::string hpms::SupplierAdaptee::GetImplName()
@@ -97,4 +98,5 @@ hpms::SupplierAdapter* CreateSupplier(hpms::WindowSettings& windowSettings) {
 void DestroySupplier(hpms::SupplierAdapter*& supplier)
 {
     hpms::SafeDelete(supplier);
+    hpms::SafeDelete(ctx);
 }
