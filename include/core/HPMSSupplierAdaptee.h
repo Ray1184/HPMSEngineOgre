@@ -4,10 +4,6 @@
 
 #pragma once
 
-#define DYNALO_EXPORT_SYMBOLS
-
-#include <symbol_helper.hpp>
-
 #include <api/HPMSSupplierAdapter.h>
 #include <core/HPMSCameraAdaptee.h>
 #include <core/HPMSLightAdaptee.h>
@@ -59,6 +55,6 @@ namespace hpms
 
 hpms::OgreContext* ctx;
 
-DYNALO_EXPORT hpms::SupplierAdapter* DYNALO_CALL CreateSupplier(hpms::WindowSettings& windowSettings);
+hpms::SupplierAdapter* CreateSupplier(hpms::WindowSettings& windowSettings);
 
-DYNALO_EXPORT void DYNALO_CALL DestroySupplier(hpms::SupplierAdapter*& supplier);
+void DestroySupplier(hpms::SupplierAdapter*& supplier);

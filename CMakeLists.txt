@@ -10,6 +10,7 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 set(OGRE_VERSION v1.12.9)
 set(PODS_VERSION master)
 set(HPMSAPI_VERSION main)
+set(GLM_VERSION 0.9.9.8)
 
 if (NOT DEFINED DEP_PATH)
     set(DEP_PATH ${CMAKE_CURRENT_BINARY_DIR}/_deps)
@@ -29,6 +30,8 @@ include(cmake/Shared.cmake)
 # Other libraries setup.
 install_from_repo(https://github.com/mtrempoltsev/pods.git PODS ${PODS_VERSION} FALSE /include/)
 
+install_from_repo(https://github.com/g-truc/glm.git GLM ${GLM_VERSION} TRUE /)
+
 install_from_repo(https://github.com/Ray1184/HPMSApi.git HPMSAPI ${HPMSAPI_VERSION} TRUE /include/)
 
 # Ogre setup.
@@ -46,9 +49,6 @@ include_directories(${OGRE_BUILD_PATH}/Dependencies/include)
 find_package(SDL2 REQUIRED)
 
 include_directories(include)
-
-include_directories(${DEP_PATH}/dynalo-src/include/dynalo)
-include_directories(${DEP_PATH}/glm-src)
 
 set(SOURCES
         src/input/HPMSInputHandler.cpp

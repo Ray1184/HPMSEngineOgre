@@ -5,9 +5,6 @@
 
 #pragma once
 
-#define DYNALO_EXPORT_SYMBOLS
-
-#include <symbol_helper.hpp>
 #include <Ogre.h>
 #include <OgreFileSystemLayer.h>
 #include <common/HPMSNamedWrapper.h>

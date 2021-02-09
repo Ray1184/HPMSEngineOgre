@@ -4,9 +4,6 @@
 
 #pragma once
 
-#define DYNALO_EXPORT_SYMBOLS
-
-#include <symbol_helper.hpp>
 #include <api/HPMSAnimationAdapter.h>
 #include <Ogre.h>
 #include <core/HPMSAdapteeCommon.h>

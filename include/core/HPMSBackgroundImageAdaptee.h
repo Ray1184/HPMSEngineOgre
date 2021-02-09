@@ -4,10 +4,6 @@
 
 #pragma once
 
-#define DYNALO_EXPORT_SYMBOLS
-
-#include <symbol_helper.hpp>
-
 #include <api/HPMSBackgroundImageAdapter.h>
 #include <glm/gtc/quaternion.hpp>
 #include <Ogre.h>
