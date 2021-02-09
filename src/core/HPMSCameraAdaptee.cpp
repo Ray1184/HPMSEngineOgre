@@ -60,13 +60,13 @@ glm::quat hpms::CameraAdaptee::GetRotation()
 void hpms::CameraAdaptee::SetNear(float near)
 {
     Check(ogreCamera);
-    ogreCamera->setNearClipDistance(near);
+    ogreCamera->setNearClipDistance(Ogre::Real(near));
 }
 
 void hpms::CameraAdaptee::SetFar(float far)
 {
     Check(ogreCamera);
-    ogreCamera->setFarClipDistance(far);
+    ogreCamera->setFarClipDistance(Ogre::Real(far));
 }
 
 void hpms::CameraAdaptee::SetFovY(float fovY)
