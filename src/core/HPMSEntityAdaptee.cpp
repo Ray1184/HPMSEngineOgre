@@ -134,11 +134,14 @@ hpms::EntityAdaptee::EntityAdaptee(hpms::OgreContext* ctx, const std::string& na
 {
     Check();
     ogreEntity = ctx->GetSceneManager()->createEntity(name);
-    for (auto& it : ogreEntity->getAllAnimationStates()->getAnimationStates())
+    if (ogreEntity->getAllAnimationStates() != nullptr)
     {
-        auto* animAdaptee = hpms::SafeNew<hpms::AnimationAdaptee>(it.second);
-        animList.push_back(animAdaptee);
-        animMap[it.first] = animAdaptee;
+        for (auto& it : ogreEntity->getAllAnimationStates()->getAnimationStates())
+        {
+            auto* animAdaptee = hpms::SafeNew<hpms::AnimationAdaptee>(it.second);
+            animList.push_back(animAdaptee);
+            animMap[it.first] = animAdaptee;
+        }
     }
 
 }
